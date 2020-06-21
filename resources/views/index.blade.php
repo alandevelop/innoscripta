@@ -64,19 +64,11 @@
                                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
                                 </div>
                                 <ul class="list-group list-group-flush" style="border-bottom: none;">
-                                    <li class="list-group-item">10$</li>
+                                    <li class="list-group-item"><strong>10$</strong></li>
                                 </ul>
-                                <div class="card-footer text-muted">
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="basic-addon1">-</span>
-                                        </div>
-                                        <input type="text" class="form-control" value="0">
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">+</span>
-                                            <span class="input-group-text">Add to cart</span>
-                                        </div>
-                                    </div>
+                                <div class="card-footer text-muted text-right">
+{{--                                    <button type="button" class="btn btn-outline-primary">Add to cart</button>--}}
+                                    <button type="button" class="btn btn-outline-danger">Remove from cart</button>
                                 </div>
                             </div>
                         </div>
