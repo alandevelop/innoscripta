@@ -2,6 +2,8 @@
 
 use Illuminate\Support\Facades\Route;
 
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,10 +15,9 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/', 'MainController@menu');
+Route::get('/cart', 'MainController@cart');
 
-Route::get('/cart', function () {
-	return view('cart');
-});
+Route::post('/cart/add-to-cart', 'CartController@addToCart');
+Route::post('/cart/decrease-by-id', 'CartController@decreaseById');
+Route::post('/cart/remove-by-id', 'CartController@removeById');
