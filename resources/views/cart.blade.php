@@ -1,193 +1,109 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Pizza | Cart</title>
+@extends('layouts.mainLayout')
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-</head>
-<body>
+@section('title', 'Cart')
 
-<div class="container">
-    <div class="row">
-        <div class="col-12">
-            <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-                <a class="navbar-brand">Pizza Shop</a>
-
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="#">Menu</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">My Orders</a>
-                        </li>
-                    </ul>
-                    <span class="navbar-text">
-                        test@mail.ru
-                    </span>
-                    <button class="btn btn-outline-success ml-2" type="button">Cart (0)</button>
-                </div>
-            </nav>
-        </div>
-    </div>
-
+@section('content')
     <div class="row mt-5">
         <div class="col-12">
             <h2 class="text-center">Cart</h2>
 
-            <div class="card mb-2 p-2">
-                <div class="row no-gutters d-flex align-items-center">
+            <p class="h2 text-center text-success empty-cart" @if($productsModels) style="display: none;" @endif>Cart is empty</p>
 
-                    <div class="col-md-1">
-                        <img src="https://via.placeholder.com/350x350" class="card-img-top" alt="..." style="width: 100%;">
-                    </div>
+            @if($productsModels)
+                <form class="cart-form" method="POST" action="{{route('createOrder')}}">
+                    @csrf
+                    <input class="total-price-hidden" type="hidden" name="total_price" value="{{$totalCartPrice + 30}}">
 
-                    <div class="col-md-9 pl-2">
-                        <h5 class="card-title" style="margin-bottom: 0;">Название карточки</h5>
-                        <p class="card-text mb-0">20$ a piece</p>
-                    </div>
+                    @foreach($productsModels as $product)
+                        <div class="card mb-2 p-2 product-cart-item">
+                            <div class="row no-gutters d-flex align-items-center">
 
-                    <div class="col-md-2">
+                                <div class="col-md-1">
+                                    <img src="/img/{{$product->img}}" class="card-img-top" alt="..." style="width: 100%;">
+                                </div>
 
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                            </div>
-                            <input type="text" class="form-control" style="border-color: #6c757d; border-right: none;">
-                            <div class="input-group-prepend">
+                                <div class="col-md-9 pl-2">
+                                    <h5 class="card-title" style="margin-bottom: 0;">{{$product->name}}</h5>
+                                    <p class="card-text mb-0">{{$product->price}}€ a piece</p>
+                                </div>
 
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
-                                <button class="btn btn-outline-danger" type="button" id="button-addon1">Delete</button>
-                            </div>
-                        </div>
+                                <div class="col-md-2">
 
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-2 p-2">
-                <div class="row no-gutters d-flex align-items-center">
+                                    <div class="input-group">
+                                        <div class="input-group-prepend">
+                                            <button class="btn btn-outline-secondary decrease_in_cart"
+                                                    type="button"
+                                                    data-product-id="{{$product->id}}"
+                                                    data-price="{{$product->price}}"
+                                            >-</button>
+                                        </div>
+                                        <input readonly="readonly"
+                                               name="products[{{$product->id}}]"
+                                               data-price="{{$product->price}}"
+                                               type="number"
+                                               value="{{$product->quantity}}"
+                                               class="form-control product-cart-input text-center"
+                                               style="border-color: #6c757d; border-right: none;">
+                                        <div class="input-group-prepend">
 
-                    <div class="col-md-1">
-                        <img src="https://via.placeholder.com/350x350" class="card-img-top" alt="..." style="width: 100%;">
-                    </div>
+                                        </div>
+                                        <div class="input-group-append">
+                                            <button class="btn btn-outline-secondary add_to_cart"
+                                                    type="button"
+                                                    data-product-id="{{$product->id}}"
+                                                    data-price="{{$product->price}}"
+                                            >+</button>
+                                            <button class="btn btn-outline-danger remove_from_cart"
+                                                    type="button"
+                                                    data-price="{{$product->price}}"
+                                                    data-product-id="{{$product->id}}"
+                                            >Delete</button>
+                                        </div>
+                                    </div>
 
-                    <div class="col-md-9 pl-2">
-                        <h5 class="card-title" style="margin-bottom: 0;">Название карточки</h5>
-                        <p class="card-text mb-0">20$ a piece</p>
-                    </div>
-
-                    <div class="col-md-2">
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                            </div>
-                            <input type="text" class="form-control" style="border-color: #6c757d; border-right: none;">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
-                                <button class="btn btn-outline-danger" type="button" id="button-addon1">Delete</button>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-2 p-2">
-                <div class="row no-gutters d-flex align-items-center">
-
-                    <div class="col-md-1">
-                        <img src="https://via.placeholder.com/350x350" class="card-img-top" alt="..." style="width: 100%;">
-                    </div>
-
-                    <div class="col-md-9 pl-2">
-                        <h5 class="card-title" style="margin-bottom: 0;">Название карточки</h5>
-                        <p class="card-text mb-0">20$ a piece</p>
-                    </div>
-
-                    <div class="col-md-2">
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
-                            </div>
-                            <input type="text" class="form-control" style="border-color: #6c757d; border-right: none;">
-                            <div class="input-group-prepend">
-
-                            </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
-                                <button class="btn btn-outline-danger" type="button" id="button-addon1">Delete</button>
+                                </div>
                             </div>
                         </div>
+                    @endforeach
 
-                    </div>
-                </div>
-            </div>
-            <div class="card mb-2 p-2">
-                <div class="row no-gutters d-flex align-items-center">
+                    <hr class="mt-5 mb-5">
 
-                    <div class="col-md-1">
-                        <img src="https://via.placeholder.com/350x350" class="card-img-top" alt="..." style="width: 100%;">
-                    </div>
-
-                    <div class="col-md-9 pl-2">
-                        <h5 class="card-title" style="margin-bottom: 0;">Название карточки</h5>
-                        <p class="card-text mb-0">20$ a piece</p>
-                    </div>
-
-                    <div class="col-md-2">
-
-                        <div class="input-group">
-                            <div class="input-group-prepend">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">-</button>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <div class="form-group">
+                                <label for="inputName">Surname</label>
+                                <input type="text" class="form-control" id="inputName" name="name" required>
                             </div>
-                            <input type="text" class="form-control" style="border-color: #6c757d; border-right: none;">
-                            <div class="input-group-prepend">
-
+                            <div class="form-group">
+                                <label for="inputName">Name</label>
+                                <input type="text" class="form-control" id="inputName" name="surname" required>
                             </div>
-                            <div class="input-group-append">
-                                <button class="btn btn-outline-secondary" type="button" id="button-addon1">+</button>
-                                <button class="btn btn-outline-danger" type="button" id="button-addon1">Delete</button>
+                            <div class="form-group">
+                                <label for="inputName">Address</label>
+                                <input type="text" class="form-control" id="inputName" name="address" required>
                             </div>
                         </div>
-
+                        <div class="col-md-5 text-right">
+                            <p><span class="total_btm">{{$totalCartPrice}}</span>€ + <span>30€ (Delivery)</span> </p>
+                            <p>
+                                <span class="h2 font-weight-bold">Total: <span class="total_btmDel">{{$totalCartPrice + 30}}</span>€</span>
+                                <span class="h2 font-weight-bold text-secondary">
+                                    (<span class="usd-total" data-rate="{{$usdRate}}">{{$totalInUsd + 30}}</span>$)
+                                </span>
+                            </p>
+                            <button type="submit" class="btn btn-success" style="width: 150px;">Order</button>
+                        </div>
                     </div>
-                </div>
-            </div>
+                </form>
+            @endif
         </div>
     </div>
 
-    <hr>
-
-    <div class="row">
-        <div class="col-md-12">
-            <p class="text-right"><span>500</span> + <span>200 (Delivery)</span> </p>
-            <p class="text-right">
-                <span class="h2 font-weight-bold">Total: <span>700€</span></span>
-                <span class="h2 font-weight-bold text-secondary">(<span>800$</span>)</span>
-            </p>
-
-        </div>
-    </div>
-
-</div>
+@endsection
 
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+@section('bodyEnd')
+    <script src="/js/cart.js"></script>
+@endsection
 
 
-</body>
-</html>

@@ -15,9 +15,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'MainController@menu');
-Route::get('/cart', 'MainController@cart');
+Route::get('/', 'MainController@menu')->name('menu');
+Route::get('/cart', 'CartController@list')->name('cart');
 
 Route::post('/cart/add-to-cart', 'CartController@addToCart');
 Route::post('/cart/decrease-by-id', 'CartController@decreaseById');
 Route::post('/cart/remove-by-id', 'CartController@removeById');
+
+Route::post('/order/create', 'OrderController@create')->name('createOrder');

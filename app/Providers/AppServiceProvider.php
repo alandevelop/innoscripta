@@ -13,7 +13,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+		$this->app->bind('CurrencyService', function ($app) {
+			return new \App\Libs\FixerLib();
+		});
     }
 
     /**

@@ -13,6 +13,8 @@ return [
     |
     */
 
+    'fixer_api_key' => env('FIXER_API_KEY'),
+
     'name' => env('APP_NAME', 'Laravel'),
 
     /*

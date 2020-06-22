@@ -27,11 +27,6 @@ class MainController extends Controller
             }
         }
 
-        return view('index', compact('categories', 'totalCartPrice'));
-    }
-
-    public function cart(Request $request)
-    {
-        return view('cart');
+        return view('menu', compact('categories', 'totalCartPrice'));
     }
 }
