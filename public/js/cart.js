@@ -105,7 +105,7 @@ $(document).ready(function()  {
             data: {productId : prod_id}
         });
 
-        if(total - prod_price <= 0) {
+        if(val <= 0) {
             $('.cart_value').hide();
             $('.empty-cart').show();
             $('.cart-form').remove();

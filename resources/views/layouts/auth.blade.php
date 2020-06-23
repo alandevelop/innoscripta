@@ -26,43 +26,7 @@
                         <li class="nav-item active">
                             <a class="nav-link" href="{{route('menu')}}">Menu</a>
                         </li>
-
-                        @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{route('orders')}}">My Orders</a>
-                            </li>
-                        @endauth
                     </ul>
-
-                    @guest
-                        <a href="{{ route('register') }}" class="btn btn-outline-success mr-2">Register</a>
-                        <a href="{{ route('login') }}" class="btn btn-outline-success">Sign In</a>
-                    @endguest
-
-                    @auth
-                        <span class="navbar-text">{{$user->email}}</span>
-                    @endauth
-
-                    <a href="{{route('cart')}}" class="btn btn-success ml-2" type="button"
-                    >Cart
-                        @if($totalCartPrice)
-                            <span class="cart_value"><span class="cart_total">{{$totalCartPrice}}</span>€</span>
-                        @else
-                            <span class="cart_value" style="display: none"><span class="cart_total"></span>€</span>
-                        @endif
-                    </a>
-
-                    @auth
-                        <a href="{{ route('logout') }}"
-                           class="btn btn-outline-success ml-2"
-                           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-                        >Logout</a>
-
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                            @csrf
-                        </form>
-                    @endauth
-
                 </div>
             </nav>
         </div>

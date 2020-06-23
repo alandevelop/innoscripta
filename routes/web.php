@@ -23,3 +23,6 @@ Route::post('/cart/decrease-by-id', 'CartController@decreaseById');
 Route::post('/cart/remove-by-id', 'CartController@removeById');
 
 Route::post('/order/create', 'OrderController@create')->name('createOrder');
+Route::get('/order/list', 'OrderController@list')->name('orders')->middleware('auth');
+
+Auth::routes();

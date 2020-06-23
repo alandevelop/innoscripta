@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
 {
@@ -89,6 +90,8 @@ class CartController extends Controller
 			$productsModels = null;
 		}
 
-		return view('cart', compact('productsModels', 'totalCartPrice', 'usdRate', 'totalInUsd'));
+		$user = Auth::user();
+
+		return view('cart', compact('productsModels', 'totalCartPrice', 'usdRate', 'totalInUsd', 'user'));
     }
 }

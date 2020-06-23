@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Category;
 use App\Product;
+use Illuminate\Support\Facades\Auth;
 
 class MainController extends Controller
 {
@@ -27,6 +28,8 @@ class MainController extends Controller
             }
         }
 
-        return view('menu', compact('categories', 'totalCartPrice'));
+		$user = Auth::user();
+
+        return view('menu', compact('categories', 'totalCartPrice', 'user'));
     }
 }
